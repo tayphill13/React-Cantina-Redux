@@ -3,15 +3,15 @@ import KegList from './KegList';
 import NewKeg from './NewKeg';
 import UpdateKeg from './UpdateKeg';
 import KegDetails from './KegDetails';
-
+import { connect } from 'react-redux';
 class KegControl extends React.Component  {
 
   constructor(props) {
     super(props);
     this.state = {
-      masterKegList: [],
-      currentPage: 'index',
-      currentKeg: null,
+      formVisibleOnPage: false,
+      selectedKeg: null,
+      editing: false
     };
   }
 
@@ -22,11 +22,24 @@ class KegControl extends React.Component  {
   }
   
   handleAddingNewKeg = (newKeg) =>  {
-    const newMasterKegList = this.state.masterKegList.concat(newKeg);
-    this.setState({
-      masterKegList: newMasterKegList,
-      currentPage: 'index',
-    });
+    const { dispatch } = this.props;
+    const { id, name, brand, origin, pintsRemaining, price } = newKeg;
+    const action = {
+      type: 'ADD_KEG',
+      id: id,
+      name: name,
+      brand: brand,
+      origin: origin,
+      pintsRemaining: pintsRemaining,
+      price: price,
+    }
+    dispatch(action);
+    this.setState({formVisibleOnPage: false});
+    // const newMasterKegList = this.state.masterKegList.concat(newKeg);
+    // this.setState({
+    //   masterKegList: newMasterKegList,
+    //   currentPage: 'index',
+    // });
   }
 
   handleViewingDetails = (id) => {
@@ -118,5 +131,7 @@ class KegControl extends React.Component  {
     );
   }
 }
+
+KegControl = connect()(KegControl);
 
 export default KegControl;
