@@ -60,20 +60,39 @@ class KegControl extends React.Component  {
   }
 
   handleUpdateKeg = (updatedKeg) =>  {
-    const newMasterKegList = this.state.masterKegList.map(kegs => {
-      if (updatedKeg.id === kegs.id) {
-        return updatedKeg;
-      } else {
-        return kegs;
-      }
-    });
+    const { dispatch } = this.props;
+    const { id, name, brand, origin, pintsRemaining, price } = updatedKeg;
+    const action = {
+      type: 'ADD_KEG',
+      id: id,
+      name: name,
+      brand: brand,
+      origin: origin,
+      pintsRemaining: pintsRemaining,
+      price: price,
+    }
+    dispatch(action);
     this.setState({
-      masterKegList: newMasterKegList,
-      currentPage: 'details', 
-      currentKeg: updatedKeg
+      editing: false,
+      selectedKeg: null
     });
-  }
+
+    }
+
+    // const newMasterKegList = this.state.masterKegList.map(kegs => {
+    //   if (updatedKeg.id === kegs.id) {
+    //     return updatedKeg;
+    //   } else {
+    //     return kegs;
+    //   }
+    // });
+    // this.setState({
+    //   masterKegList: newMasterKegList,
+    //   currentPage: 'details', 
+    //   currentKeg: updatedKeg
+    // });
   handleDeleteKeg = (id) => {
+    const
     const newMasterKegList = this.state.masterKegList.filter(kegs => kegs.id !== id);
     this.setState({
       masterKegList: newMasterKegList,
