@@ -133,7 +133,12 @@ class KegControl extends React.Component  {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    masterKegList: state
+  }
+}
 
-KegControl = connect()(KegControl);
+KegControl = connect(mapStateToProps)(KegControl);
 
 export default KegControl;
