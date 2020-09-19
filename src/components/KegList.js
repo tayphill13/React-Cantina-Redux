@@ -4,20 +4,21 @@ import Keg from "./Keg";
 import CardColumns from 'react-bootstrap/CardColumns';
 import Button from 'react-bootstrap/Button';
 
+
 function KegList(props) {
   return (
     <React.Fragment>
       <CardColumns>
-        {props.kegList.map((kegs) =>
+        {Object.values(props.kegList).map((keg) =>
           <Keg
             onKegClick={props.onKegClick}
-            name={kegs.name}
-            brand={kegs.brand}
-            price={kegs.price}
-            origin={kegs.origin}
-            pintsRemaining= {kegs.pintsRemaining}
-            id={kegs.id}
-            key={kegs.id} />
+            name={keg.name}
+            brand={keg.brand}
+            price={keg.price}
+            origin={keg.origin}
+            pintsRemaining= {keg.pintsRemaining}
+            id={keg.id}
+            key={keg.id} />
             )}
       
       </CardColumns>
@@ -26,7 +27,7 @@ function KegList(props) {
   )
 }
 KegList.propTypes = {
-  kegList: PropTypes.array,
+  kegList: PropTypes.object,
   onLinkClick: PropTypes.func,
   onKegClick: PropTypes.func,
   onServePint: PropTypes.func

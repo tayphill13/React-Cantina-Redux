@@ -3,6 +3,7 @@ import KegList from './KegList';
 import NewKeg from './NewKeg';
 import UpdateKeg from './UpdateKeg';
 import KegDetails from './KegDetails';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class KegControl extends React.Component  {
@@ -11,7 +12,7 @@ class KegControl extends React.Component  {
     super(props);
     this.state = {
       formVisibleOnPage: false,
-      selectedKeg: null,
+      currentPage: null,
       editing: false
     };
   }
@@ -39,11 +40,8 @@ class KegControl extends React.Component  {
   }
 
   handleViewingDetails = (id) => {
-    const kegToView = this.state.masterKegList.filter(kegs => kegs.id === id)[0];
-    this.setState({
-      currentPage: 'details',
-      currentKeg: kegToView
-    });
+    const selectedKeg = this.props.masterKegList[id];
+    this.setState({ selectedKeg: selectedKeg});
   }
 
   
@@ -105,8 +103,8 @@ class KegControl extends React.Component  {
   render(){
     let pageToDisplay = null;
     if (this.state.currentPage === 'index')  {
-      pageToDisplay = <KegList
-        kegList = {this.state.masterKegList}
+      pageToDisplay = <KegList 
+        kegList={this.props.masterKegList}
         onLinkClick = {this.handleClick}
         onKegClick = {this.handleViewingDetails} />
     } else if (this.state.currentPage === 'create') {
@@ -115,14 +113,14 @@ class KegControl extends React.Component  {
         onAddingKeg = {this.handleAddingNewKeg} />
     } else if (this.state.currentPage === 'details') {
       pageToDisplay = <KegDetails
-        keg = {this.state.currentKeg}
+        keg = {this.props.currentKeg}
         onLinkClick = {this.handleClick}
         onDeleteClick = {this.handleDeleteKeg}
         onUpdateClick = {this.handleUpdateClick}
         onServePint = {this.handleServePint} />
     } else if (this.state.currentPage === 'update')  {
       pageToDisplay = <UpdateKeg
-        keg = {this.state.currentKeg}
+        keg = {this.props.currentKeg}
         onLinkClick = {this.handleClick}
         onUpdateKeg = {this.handleUpdateKeg}/>
     }
@@ -133,6 +131,12 @@ class KegControl extends React.Component  {
     );
   }
 }
+
+KegControl.propTypes = {
+  masterKegList: PropTypes.object,
+  formVisibleOnPage: PropTypes.bool
+};
+
 const mapStateToProps = state => {
   return {
     masterKegList: state
