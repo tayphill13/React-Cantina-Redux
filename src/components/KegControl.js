@@ -4,6 +4,7 @@ import NewKeg from './NewKeg';
 import UpdateKeg from './UpdateKeg';
 import KegDetails from './KegDetails';
 import { connect } from 'react-redux';
+
 class KegControl extends React.Component  {
 
   constructor(props) {
@@ -35,11 +36,6 @@ class KegControl extends React.Component  {
     }
     dispatch(action);
     this.setState({formVisibleOnPage: false});
-    // const newMasterKegList = this.state.masterKegList.concat(newKeg);
-    // this.setState({
-    //   masterKegList: newMasterKegList,
-    //   currentPage: 'index',
-    // });
   }
 
   handleViewingDetails = (id) => {
@@ -76,29 +72,16 @@ class KegControl extends React.Component  {
       editing: false,
       selectedKeg: null
     });
+  };
 
-    }
-
-    // const newMasterKegList = this.state.masterKegList.map(kegs => {
-    //   if (updatedKeg.id === kegs.id) {
-    //     return updatedKeg;
-    //   } else {
-    //     return kegs;
-    //   }
-    // });
-    // this.setState({
-    //   masterKegList: newMasterKegList,
-    //   currentPage: 'details', 
-    //   currentKeg: updatedKeg
-    // });
   handleDeleteKeg = (id) => {
-    const
-    const newMasterKegList = this.state.masterKegList.filter(kegs => kegs.id !== id);
-    this.setState({
-      masterKegList: newMasterKegList,
-      currentPage: 'index',
-      currentKeg: null
-    });
+    const { dispatch } = this.props;
+    const action = {
+      type: "DELETE_KEG",
+      id: id
+    }
+    dispatch(action);
+    this.setState({selectedKeg: null})
   }
   handleServePint = (id) => {
     this.setState(state => {
@@ -116,8 +99,8 @@ class KegControl extends React.Component  {
         currentPage: 'index',
         currentKeg: null
       });
-  });
-}
+    });
+  }
 
   render(){
     let pageToDisplay = null;
