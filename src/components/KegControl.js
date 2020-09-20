@@ -11,17 +11,32 @@ class KegControl extends React.Component  {
   constructor(props) {
     super(props);
     this.state = {
-      formVisibleOnPage: false,
       currentPage: null,
       editing: false
     };
   }
 
-  handleClick = (pageName) => {
-    this.setState({
-      currentPage: pageName
-    });
+  handleClick = () => {
+    if (this.state.selectedKeg != null) {
+      this.setState({
+        formVisibleOnPage: false,
+        selectedKeg: null,
+        editing: false
+      });
+    } else {
+      const { dispatch } = this.props;
+    const action = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(action);
   }
+}
+
+  // handleClick = (pageName) => {
+  //   this.setState({
+  //     currentPage: pageName
+  //   });
+  // }
   
   handleAddingNewKeg = (newKeg) =>  {
     const { dispatch } = this.props;
@@ -36,7 +51,10 @@ class KegControl extends React.Component  {
       price: price,
     }
     dispatch(action);
-    this.setState({formVisibleOnPage: false});
+    const action2 = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(action2);
   }
 
   handleViewingDetails = (id) => {
