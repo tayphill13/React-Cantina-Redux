@@ -21,7 +21,7 @@ function KegList(props) {
             key={kegs.id} />
             )}
       </CardColumns>
-      <Button variant='secondary' type='button' size='md' onClick={()=>props.onLinkClick('create')}>Add Keg</Button>
+<Button variant='secondary' type='button' size='md' onClick={()=>props.onLinkClick('create')}>Add Keg</Button>
     </React.Fragment>
   )
 }

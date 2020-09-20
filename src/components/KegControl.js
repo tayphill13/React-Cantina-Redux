@@ -49,7 +49,7 @@ class KegControl extends React.Component  {
     const kegToUpdate = this.state.masterKegList.filter(kegs => kegs.id === id)[0];
     this.setState({ 
       currentPage: 'update',
-      currentKeg: kegToUpdate 
+      selectedKeg: kegToUpdate   //might be currentKeg
     });
   }
 
@@ -102,23 +102,23 @@ class KegControl extends React.Component  {
 
   render(){
     let pageToDisplay = null;
-    if (this.state.currentPage === 'index')  {
+    if (this.props.currentPage === 'index')  {
       pageToDisplay = <KegList 
         kegList={this.props.masterKegList}
         onLinkClick = {this.handleClick}
         onKegClick = {this.handleViewingDetails} />
-    } else if (this.state.currentPage === 'create') {
+    } else if (this.props.currentPage === 'create') {
       pageToDisplay = <NewKeg
         onLinkClick = {this.handleClick}
         onAddingKeg = {this.handleAddingNewKeg} />
-    } else if (this.state.currentPage === 'details') {
+    } else if (this.props.currentPage === 'details') {
       pageToDisplay = <KegDetails
         keg = {this.props.currentKeg}
         onLinkClick = {this.handleClick}
         onDeleteClick = {this.handleDeleteKeg}
         onUpdateClick = {this.handleUpdateClick}
         onServePint = {this.handleServePint} />
-    } else if (this.state.currentPage === 'update')  {
+    } else if (this.props.currentPage === 'update')  {
       pageToDisplay = <UpdateKeg
         keg = {this.props.currentKeg}
         onLinkClick = {this.handleClick}
