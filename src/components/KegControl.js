@@ -5,6 +5,7 @@ import UpdateKeg from './UpdateKeg';
 import KegDetails from './KegDetails';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as a from './../actions';
 
 class KegControl extends React.Component  {
 
@@ -19,41 +20,21 @@ class KegControl extends React.Component  {
   handleClick = () => {
     if (this.state.selectedKeg != null) {
       this.setState({
-        formVisibleOnPage: false,
         selectedKeg: null,
         editing: false
       });
     } else {
       const { dispatch } = this.props;
-    const action = {
-      type: 'TOGGLE_FORM'
-    }
+    const action = a.toggleForm();
     dispatch(action);
   }
-}
-
-  // handleClick = (pageName) => {
-  //   this.setState({
-  //     currentPage: pageName
-  //   });
-  // }
+  }
   
   handleAddingNewKeg = (newKeg) =>  {
     const { dispatch } = this.props;
-    const { id, name, brand, origin, pintsRemaining, price } = newKeg;
-    const action = {
-      type: 'ADD_KEG',
-      id: id,
-      name: name,
-      brand: brand,
-      origin: origin,
-      pintsRemaining: pintsRemaining,
-      price: price,
-    }
+    const action = a.addKeg(newKeg);
     dispatch(action);
-    const action2 = {
-      type: 'TOGGLE_FORM'
-    }
+    const action2 = a.toggleForm();
     dispatch(action2);
   }
 
@@ -71,18 +52,9 @@ class KegControl extends React.Component  {
     });
   }
 
-  handleUpdateKeg = (updatedKeg) =>  {
+  handleUpdateKeg = (kegToUpdate) =>  {
     const { dispatch } = this.props;
-    const { id, name, brand, origin, pintsRemaining, price } = updatedKeg;
-    const action = {
-      type: 'ADD_KEG',
-      id: id,
-      name: name,
-      brand: brand,
-      origin: origin,
-      pintsRemaining: pintsRemaining,
-      price: price,
-    }
+    const action = a.addKeg(kegToUpdate);
     dispatch(action);
     this.setState({
       editing: false,
@@ -92,13 +64,11 @@ class KegControl extends React.Component  {
 
   handleDeleteKeg = (id) => {
     const { dispatch } = this.props;
-    const action = {
-      type: "DELETE_KEG",
-      id: id
-    }
+    const action = a.deleteKeg(id);
     dispatch(action);
     this.setState({selectedKeg: null})
   }
+
   handleServePint = (id) => {
     this.setState(state => {
       const masterKegList = state.masterKegList.map(keg => {
