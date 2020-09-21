@@ -66,8 +66,7 @@ class KegControl extends React.Component  {
   }
 
   handleServePint = (id) => {
-    this.setState(state => {
-      const masterKegList = state.masterKegList.map(keg => {
+      const masterKegList = this.state.masterKegList.map(keg => {
         if (keg.id === id && keg.pintsRemaining > 0) {
             return {...keg, pintsRemaining: keg.pintsRemaining - 1};
         } else if (keg.id === id && keg.pintsRemaining === 0) {
@@ -81,7 +80,6 @@ class KegControl extends React.Component  {
         currentPage: 'index',
         currentKeg: null
       });
-    });
   }
 
   render(){
@@ -98,7 +96,8 @@ class KegControl extends React.Component  {
         <KegDetails
           keg={this.state.selectedKeg}
           onClickingDelete={this.handleDeletingTicket}
-          onClickingEdit={this.handleEditClick} />
+          onClickingEdit={this.handleEditClick}
+          onServePint={this.handleServePint} />
           buttonText = "Return to Ticket List";
     } else if (this.props.formVisibleOnPage) {
       pageToDisplay = 
