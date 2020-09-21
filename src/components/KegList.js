@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Keg from "./Keg";
 import CardColumns from 'react-bootstrap/CardColumns';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 
 
 function KegList(props) {
@@ -21,7 +21,7 @@ function KegList(props) {
             key={kegs.id} />
             )}
       </CardColumns>
-<Button variant='secondary' type='button' size='md' onClick={()=>props.onLinkClick('create')}>Add Keg</Button>
+{/* <Button variant='secondary' type='button' size='md' onClick={()=>props.onLinkClick('create')}>Add Keg</Button> */}
     </React.Fragment>
   )
 }

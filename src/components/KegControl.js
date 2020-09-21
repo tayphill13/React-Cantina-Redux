@@ -44,12 +44,8 @@ class KegControl extends React.Component  {
   }
 
   
-  handleUpdateClick = (id) => {
-    const kegToUpdate = this.state.masterKegList.filter(kegs => kegs.id === id)[0];
-    this.setState({ 
-      currentPage: 'update',
-      selectedKeg: kegToUpdate   //might be currentKeg
-    });
+  handleUpdateClick = () => {
+    this.setState({ editing: true });
   }
 
   handleUpdateKeg = (kegToUpdate) =>  {
@@ -60,7 +56,7 @@ class KegControl extends React.Component  {
       editing: false,
       selectedKeg: null
     });
-  };
+  }
 
   handleDeleteKeg = (id) => {
     const { dispatch } = this.props;
@@ -90,31 +86,60 @@ class KegControl extends React.Component  {
 
   render(){
     let pageToDisplay = null;
-    if (this.props.currentPage === 'index')  {
-      pageToDisplay = <KegList 
-        kegList={this.props.masterKegList}
-        onLinkClick = {this.handleClick}
-        onKegClick = {this.handleViewingDetails} />
-    } else if (this.props.currentPage === 'create') {
-      pageToDisplay = <NewKeg
-        onLinkClick = {this.handleClick}
-        onAddingKeg = {this.handleAddingNewKeg} />
-    } else if (this.props.currentPage === 'details') {
-      pageToDisplay = <KegDetails
-        keg = {this.props.currentKeg}
-        onLinkClick = {this.handleClick}
-        onDeleteClick = {this.handleDeleteKeg}
-        onUpdateClick = {this.handleUpdateClick}
-        onServePint = {this.handleServePint} />
-    } else if (this.props.currentPage === 'update')  {
-      pageToDisplay = <UpdateKeg
-        keg = {this.props.currentKeg}
-        onLinkClick = {this.handleClick}
-        onUpdateKeg = {this.handleUpdateKeg}/>
-    }
+    let buttonText = null;
+    if (this.state.editing) {
+      pageToDisplay = 
+        <UpdateKeg 
+          keg={this.state.selectedKeg} 
+          onUpdateKeg={this.handleUpdateKeg} />
+          buttonText = "Return to Ticket List";
+    } else if (this.state.selectedKeg != null) {
+      pageToDisplay =
+        <KegDetails
+          keg={this.state.selectedKeg}
+          onClickingDelete={this.handleDeletingTicket}
+          onClickingEdit={this.handleEditClick} />
+          buttonText = "Return to Ticket List";
+    } else if (this.props.formVisibleOnPage) {
+      pageToDisplay = 
+        <NewKeg 
+          onAddingKeg={this.handleAddingNewKeg} />;
+          buttonText = "Return to Keg List";
+    } else {
+      pageToDisplay = 
+        <KegList 
+          kegList={this.props.masterKegList} 
+          onKegClick={this.handleViewingDetails} />;
+          buttonText = "Add Keg";
+        }
+
+    // let pageToDisplay = null;
+    // if (this.state.currentPage === 'index')  {
+    //   pageToDisplay = <KegList 
+    //     kegList={this.props.masterKegList}
+    //     onLinkClick = {this.handleClick}
+    //     onKegClick = {this.handleViewingDetails} />
+    // } else if (this.state.currentPage === 'create') {
+    //   pageToDisplay = <NewKeg
+    //     onLinkClick = {this.handleClick}
+    //     onAddingKeg = {this.handleAddingNewKeg} />
+    // } else if (this.state.currentPage === 'details') {
+    //   pageToDisplay = <KegDetails
+    //     keg = {this.props.currentKeg}
+    //     onLinkClick = {this.handleClick}
+    //     onDeleteClick = {this.handleDeleteKeg}
+    //     onUpdateClick = {this.handleUpdateClick}
+    //     onServePint = {this.handleServePint} />
+    // } else if (this.state.currentPage === 'update')  {
+    //   pageToDisplay = <UpdateKeg
+    //     keg = {this.props.currentKeg}
+    //     onLinkClick = {this.handleClick}
+    //     onUpdateKeg = {this.handleUpdateKeg}/>
+      // }
     return (
       <React.Fragment>
         {pageToDisplay}
+        <button onClick={this.handleClick}>{buttonText}</button>
       </React.Fragment>
     );
   }
