@@ -113,29 +113,7 @@ class KegControl extends React.Component  {
           buttonText = "Add Keg";
         }
 
-    // let pageToDisplay = null;
-    // if (this.state.currentPage === 'index')  {
-    //   pageToDisplay = <KegList 
-    //     kegList={this.props.masterKegList}
-    //     onLinkClick = {this.handleClick}
-    //     onKegClick = {this.handleViewingDetails} />
-    // } else if (this.state.currentPage === 'create') {
-    //   pageToDisplay = <NewKeg
-    //     onLinkClick = {this.handleClick}
-    //     onAddingKeg = {this.handleAddingNewKeg} />
-    // } else if (this.state.currentPage === 'details') {
-    //   pageToDisplay = <KegDetails
-    //     keg = {this.props.currentKeg}
-    //     onLinkClick = {this.handleClick}
-    //     onDeleteClick = {this.handleDeleteKeg}
-    //     onUpdateClick = {this.handleUpdateClick}
-    //     onServePint = {this.handleServePint} />
-    // } else if (this.state.currentPage === 'update')  {
-    //   pageToDisplay = <UpdateKeg
-    //     keg = {this.props.currentKeg}
-    //     onLinkClick = {this.handleClick}
-    //     onUpdateKeg = {this.handleUpdateKeg}/>
-      // }
+        
     return (
       <React.Fragment>
         {pageToDisplay}
